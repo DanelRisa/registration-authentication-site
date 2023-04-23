@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+     <script>
+      let user = [
+        {name: "d", username: "d1", password: "123"},
+        {name: "s", username: "s2", password: "1234"},
+        {name: "k", username: "s3", password: "124"},
+        {name: "p", username: "s4", password: "234"}
+      ];
+
+      function login() {
+        let username = document.querySelector("#logUsername").value;
+        let password = document.querySelector("#logPassword").value;
+        if (!username || !password) {
+          alert("Please fill all empty fields.");
+          return;
+        }
+        for (let i = 0; i < user.length; i++) {
+          if (username === user[i].username && password === user[i].password) {
+            document.querySelector("#message").innerHTML = "Your account name is: " + user[i].name;
+            document.querySelector("#logDiv").style.display = "none";
+            document.querySelector("#logoutDiv").style.display = "block";
+            document.querySelector("#user-name").innerHTML = user[i].name;
+            document.querySelector("#logDiv").remove();
+
+
+            return;
+          }
+        }
+        alert("Error! Mot correct username or password.");
+      }
+
+      function register() {
+        let name = document.querySelector("#regName").value;
+        let username = document.querySelector("#regUsername").value;
+        let password = document.querySelector("#regPassword").value;
+        let repeatPassword = document.querySelector("#regRepeatPassword").value;
+        if (!name || !username || !password || !repeatPassword) {
+          alert("Please fill in all fields.");
+          return;
+        }
+        for (let i = 0; i < user.length; i++) {
+          if (username === user[i].username) {
+            alert("Error! Username already exists.");
+            return;
+          }
+        }
+        if (password !== repeatPassword) {
+          alert("Error! Passwords do not match. Please try again");
+          return;
+        }
+        user.push({name: name, username: username, password: password});
+        alert("Registration successful, please login.");
+        goToLogin();
+       
+      }
+      function logout(){
+        document.querySelector("#logUsername").value = "";
+        document.querySelector("#logPassword").value = "";
+        document.querySelector("#regName").value = "";
+        document.querySelector("#regUsername").value = "";
+        document.querySelector("#regPassword").value = "";
+        document.querySelector("#regRepeatPassword").value = "";
+        document.querySelector("#logDiv").style.display = "block"
+        document.querySelector("#logoutDiv").style.display = "none";
+        document.querySelector("#message").innerHTML = "";
+      }
+
+      function goToRegister() {
+        document.querySelector("#logDiv").style.display = "none";
+        document.querySelector("#regDiv").style.display = "block";
+      }
+
+      function goToLogin() {
+        document.querySelector("#logDiv").style.display = "block";
+        document.querySelector("#regDiv").style.display = "none";
+      }
+    </script>
+  </head>
+  <body>
+    <div class = container style="display: flex; justify-content: center; font-size: 33px; flex-direction: column; align-items: center;">
+    <div id="logDiv">
+      <h1>Login</h1>
+      <label for="logUsername"></label>
+      <input type="text" id="logUsername" name="logUsername"  placeholder="Username" style="color: gray;"><br>
+      <label for="logPassword"></label>
+      <input type="password" id="logPassword" name="logPassword" placeholder="Password" style="color: gray;"><br>
+      <button onclick="login()">Login</button>
+      <button onclick="goToRegister()">Go to Register page</button>
+    </div>
+    <div id="regDiv" style="display:none">
+      <h1>Register</h1>
+      <label for="regName"></label>
+      <input type="text" id="regName" name="regName" placeholder="Name" style="color: gray;"><br>
+      <label for="regUsername"></label>
+      <input type="text" id="regUsername" name="regUsername" placeholder="Username" style="color: gray;"><br>
+      <label for="regPassword"></label>
+      <input type="password" id="regPassword" name="regPassword" placeholder="Password" style="color: gray;"><br>
+      <label for="regRepeatPassword"></label>
+      <input type="password" id="regRepeatPassword" name="regRepeatPassword" placeholder="Repeat Password" style="color: gray;"><br>
+      <button onclick="register()">Register</button>
+      <button onclick="goToLogin()">Back to Login page</button>
+    </div>
+    <div id = "logoutDiv" style="display: none;">
+        <div id = "final-message"></div>
+        <button onclick="logout()">Logout</button>
+
+    </div>
+    <div id="message"></div>
+    </div>
+  </body>
